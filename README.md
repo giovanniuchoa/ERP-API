@@ -1,6 +1,6 @@
 # Car API
 
-This project is a [simple API about cars. It was made in order to practice ASP.NET Core and C#].
+This project is a simple API about cars made in order to practice ASP.NET Core and C#.
 
 ## Getting Started
 
