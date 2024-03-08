@@ -1,19 +1,25 @@
 # Car API
 
-This project is a simple API about cars made in order to practice ASP.NET Core and C#.
+This project is a simple API about cars made in order to practice ASP.NET Core, C# and Entity Framework.
 
 ## Getting Started
 
-No additional action is required to use this code yet. Simply follow these steps to get started:
+Simply follow these steps to get started:
 
 1. Download the project files as a .zip file.
 2. Extract the contents of the .zip file.
-3. Use the code as needed.
+3. Change the database connection string on Program.cs to yours;
+4. Use the code as needed.
+
+## Packages used
+
+. Microsoft.EntityFrameworkCore (8.0.2)
+. Microsoft.EntityFrameworkCore.SqlServer (8.0.2)
+. Microsoft.EntityFrameworkCore.Tools (8.0.2)
 
 ## Future Implementations
 
 This project aims to implement the following features in the future:
 
 - Methods POST, PUT, and DELETE
-- Integration with SQL Server Database using Entity Framework
 
