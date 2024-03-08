@@ -13,9 +13,9 @@ Simply follow these steps to get started:
 
 ## Packages used
 
-. Microsoft.EntityFrameworkCore (8.0.2)
-. Microsoft.EntityFrameworkCore.SqlServer (8.0.2)
-. Microsoft.EntityFrameworkCore.Tools (8.0.2)
+1. Microsoft.EntityFrameworkCore (8.0.2)
+2. Microsoft.EntityFrameworkCore.SqlServer (8.0.2)
+3. Microsoft.EntityFrameworkCore.Tools (8.0.2)
 
 ## Future Implementations
 
