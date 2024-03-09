@@ -17,12 +17,20 @@ namespace CarQuery__Test.Controllers
             _carService = carService;
         }
 
-        [HttpGet]
-        public IEnumerable<Car> Get()
+        [HttpGet] //Get all cars
+        public IEnumerable<Car> GetAllCars()
         {
-            var cars = _carService.GetCars();
+            var cars = _carService.GetAllCars();
             return cars;
         }
 
+        [HttpGet("{id}")] //Get car by id
+        public IEnumerable<Car> GetCar(int id)
+        {
+            var car = _carService.GetCarById(id);
+            return car;
+        }
+
+        
     }
 }

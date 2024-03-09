@@ -5,7 +5,8 @@ namespace CarQuery__Test.Domain.Services
     public interface ICarService
     {
 
-        IEnumerable<Car> GetCars();
+        IEnumerable<Car> GetAllCars();
+        IEnumerable<Car> GetCarById(int id);
 
     }
 }

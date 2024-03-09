@@ -1,7 +1,7 @@
 ﻿using CarQuery__Test.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CarQuery__Test.Services.Data
+namespace CarQuery__Test.Data
 {
     public class AppDbContext : DbContext
     {

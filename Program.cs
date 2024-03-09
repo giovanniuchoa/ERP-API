@@ -1,6 +1,6 @@
+using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Services;
 using CarQuery__Test.Services;
-using CarQuery__Test.Services.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

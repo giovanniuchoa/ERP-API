@@ -1,6 +1,4 @@
-﻿using CarQuery__Test.Services.Data;
-
-namespace CarQuery__Test.Services
+﻿namespace CarQuery__Test.Data
 {
     public abstract class BaseRepository
     {
