@@ -1,6 +1,7 @@
 ﻿using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarQuery__Test.Services
@@ -21,6 +22,21 @@ namespace CarQuery__Test.Services
         public IEnumerable<Car> GetAllCars()
         {
             return _context.Cars.ToList();
+        }
+
+        public bool CreateCar([FromBody]Car car)
+        {
+            try
+            {
+                _context.Cars.Add(car);
+                _context.SaveChanges();
+            }
+            catch (Exception ex) 
+            { 
+                return false; 
+            }
+
+            return true;
         }
     }
 }

@@ -31,6 +31,13 @@ namespace CarQuery__Test.Controllers
             return car;
         }
 
+        [HttpPost]
+        public bool CreateCar([FromBody]Car car)
+        {
+            bool result = _carService.CreateCar(car);
+            return result;
+        }
+
         
     }
 }
