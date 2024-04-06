@@ -9,6 +9,7 @@ namespace CarQuery__Test.Domain.Services
         IEnumerable<Car> GetAllCars();
         IEnumerable<Car> GetCarById(int id);
         bool CreateCar(Car car);
+        IEnumerable<Car> UpdateCar(int id, Car car);
 
     }
 

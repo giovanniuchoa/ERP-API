@@ -38,5 +38,18 @@ namespace CarQuery__Test.Services
 
             return true;
         }
+
+        public IEnumerable<Car> UpdateCar(int id, Car car)
+        {
+            var existingCar = _context.Cars.Find(id);
+
+            existingCar.Name = car.Name;
+            existingCar.Brand = car.Brand;
+            existingCar.Year = car.Year;
+
+            _context.SaveChanges();
+
+           yield return car;
+        }
     }
 }

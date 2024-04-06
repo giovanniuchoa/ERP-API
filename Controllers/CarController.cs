@@ -38,6 +38,11 @@ namespace CarQuery__Test.Controllers
             return result;
         }
 
-        
+        [HttpPut("{id}")]
+        public IEnumerable<Car> UpdateCar(int id, [FromBody]Car car)
+        {
+            var newCar = _carService.UpdateCar(id, car);
+            return newCar;
+        }
     }
 }
