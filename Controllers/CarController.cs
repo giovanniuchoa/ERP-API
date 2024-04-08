@@ -31,18 +31,25 @@ namespace CarQuery__Test.Controllers
             return car;
         }
 
-        [HttpPost]
+        [HttpPost] //Create a new car
         public bool CreateCar([FromBody]Car car)
         {
             bool result = _carService.CreateCar(car);
             return result;
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}")] //Update a car
         public IEnumerable<Car> UpdateCar(int id, [FromBody]Car car)
         {
             var newCar = _carService.UpdateCar(id, car);
             return newCar;
+        }
+
+        [HttpDelete("{id}")] //Delete a car
+        public bool DeleteCar(int id)
+        {
+            bool result = _carService.DeleteCar(id);
+            return result;
         }
     }
 }

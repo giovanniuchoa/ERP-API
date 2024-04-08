@@ -4084,19 +4084,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Giovanni\\.nuget\\packages\\": {}
+    "C:\\Users\\kmbglru\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Giovanni\\Desktop\\API-car\\API-car\\CarQuery--Test.csproj",
+      "projectUniqueName": "C:\\Users\\kmbglru\\Desktop\\Repositorio Local\\API-car\\CarQuery--Test.csproj",
       "projectName": "CarQuery--Test",
-      "projectPath": "C:\\Users\\Giovanni\\Desktop\\API-car\\API-car\\CarQuery--Test.csproj",
-      "packagesPath": "C:\\Users\\Giovanni\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Giovanni\\Desktop\\API-car\\API-car\\obj\\",
+      "projectPath": "C:\\Users\\kmbglru\\Desktop\\Repositorio Local\\API-car\\CarQuery--Test.csproj",
+      "packagesPath": "C:\\Users\\kmbglru\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\kmbglru\\Desktop\\Repositorio Local\\API-car\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Giovanni\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\kmbglru\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -4104,6 +4109,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -4161,7 +4167,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

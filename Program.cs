@@ -12,8 +12,8 @@ builder.Services.AddTransient<ICarService, CarService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;TrustServerCertificate=True;Integrated Security=SSPI;");
-    //options.UseSqlServer("Data Source=PCKMB003;User ID=sa;Password=Giovanni123;TrustServerCertificate=True");
+    //options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;TrustServerCertificate=True;Integrated Security=SSPI;");
+    options.UseSqlServer("Data Source=PCKMB003;User ID=sa;Password=Giovanni123;TrustServerCertificate=True");
 });
 
 var app = builder.Build();
