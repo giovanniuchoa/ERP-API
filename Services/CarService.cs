@@ -51,5 +51,21 @@ namespace CarQuery__Test.Services
 
            yield return car;
         }
+
+        public bool DeleteCar(int id)
+        {
+            try
+            {
+                var existingCar = _context.Cars.Find(id);
+                _context.Cars.Remove(existingCar);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }
