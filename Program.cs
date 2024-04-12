@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddTransient<ICarService, CarService>();
+builder.Services.AddTransient<IPersonService, PersonService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {

@@ -13,27 +13,59 @@ namespace CarQuery__Test.Services
 
         public bool CreatePerson(Person person)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Persons.Add(person);
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public bool DeletePerson(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var existingPerson = _context.Persons.Find(id);
+                _context.Persons.Remove(existingPerson);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public IEnumerable<Person> GetAllPersons()
         {
-            throw new NotImplementedException();
+            return _context.Persons.ToList();
+            
         }
 
         public IEnumerable<Person> GetPersonById(int id)
         {
-            throw new NotImplementedException();
-        }
+            var person = _context.Persons.Find(id);
+            yield return person;
+        } 
 
         public IEnumerable<Person> UpdatePerson(int id, Person person)
         {
-            throw new NotImplementedException();
+            var existingPerson = _context.Persons.Find(id);
+
+            existingPerson.Name = person.Name;
+            existingPerson.Birth = person.Birth;
+            existingPerson.Sex = person.Sex;
+            existingPerson.Cpf = person.Cpf;
+
+            _context.SaveChanges();
+
+            yield return person;
         }
     }
 }
