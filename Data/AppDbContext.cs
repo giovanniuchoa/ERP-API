@@ -10,6 +10,8 @@ namespace CarQuery__Test.Data
 
         public DbSet<Person> Persons { get; set; }
 
+        public DbSet<Reseller> Resellers { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
