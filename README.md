@@ -22,6 +22,5 @@ Simply follow these steps to get started:
 This project aims to implement the following features in the future:
 
 - Use Repository structure.
-- Methods POST, PUT, and DELETE.
 - Use Fluent API to set a more consistent database.
 
