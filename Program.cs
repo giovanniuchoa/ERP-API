@@ -12,6 +12,7 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddControllers();
 builder.Services.AddTransient<ICarService, CarService>();
 builder.Services.AddTransient<IPersonService, PersonService>();
+builder.Services.AddTransient<IResellerService, ResellerService>(); 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
