@@ -16,7 +16,8 @@ builder.Services.AddTransient<IResellerService, ResellerService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;TrustServerCertificate=True;Integrated Security=SSPI;");
+    //options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=master;TrustServerCertificate=True;Integrated Security=SSPI;");
+    options.UseSqlServer("Data Source=DESKTOP-SE0OT65\\SQLEXPRESS;Initial Catalog=API-Car;Integrated Security=True;TrustServerCertificate=True");
 });
 
 builder.Services.AddCors(options =>
