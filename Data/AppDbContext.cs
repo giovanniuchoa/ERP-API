@@ -12,6 +12,8 @@ namespace CarQuery__Test.Data
 
         public DbSet<Reseller> Resellers { get; set; }
 
+        public DbSet<Sale> Sales { get; set; }
+
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
