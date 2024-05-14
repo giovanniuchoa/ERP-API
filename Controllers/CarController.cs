@@ -31,11 +31,16 @@ namespace CarQuery__Test.Controllers
             return car;
         }
 
-        [HttpPost] //Create a new car
-        public bool CreateCar([FromBody]Car car)
+        public IActionResult CreateCar([FromBody] Car car) //Create a new car
         {
-            bool result = _carService.CreateCar(car);
-            return result;
+            if (_carService.CreateCar(car))
+            {
+                return Ok(new { success = true, message = "Carro criado com sucesso." });
+            }
+            else
+            {
+                return BadRequest(new { success = false, message = "Erro ao criar o carro." });
+            }
         }
 
         [HttpPut("{id}")] //Update a car
@@ -46,10 +51,16 @@ namespace CarQuery__Test.Controllers
         }
 
         [HttpDelete("{id}")] //Delete a car
-        public bool DeleteCar(int id)
+        public IActionResult DeleteCar(int id)
         {
-            bool result = _carService.DeleteCar(id);
-            return result;
+            if (_carService.DeleteCar(id))
+            {
+                return Ok(new { success = true, message = "Carro excluído com sucesso." });
+            }
+            else
+            {
+                return NotFound(new { success = false, message = "Carro não encontrado." });
+            }
         }
     }
 }
