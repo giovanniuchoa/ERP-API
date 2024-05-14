@@ -14,8 +14,10 @@ namespace CarQuery__Test.Services
 
         public IEnumerable<Sale> GetSaleById(int id)
         {
+
             var sale = _context.Sales.Find(id);
             yield return sale;
+
         }
 
         public IEnumerable<Sale> GetAllSales()
