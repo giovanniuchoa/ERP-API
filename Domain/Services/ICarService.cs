@@ -6,11 +6,12 @@ namespace CarQuery__Test.Domain.Services
     public interface ICarService
     {
 
-        IEnumerable<Car> GetAllCars();
-        IEnumerable<Car> GetCarById(int id);
-        bool CreateCar(Car car);
-        IEnumerable<Car> UpdateCar(int id, Car car);
-        bool DeleteCar(int id);
+        Task<IEnumerable<Car>> GetAllCarsAsync();
+        Task<Car> GetCarByIdAsync(int id); 
+        Task<Car> CreateCarAsync(Car car); 
+        Task<Car> UpdateCarAsync(int id, Car car); 
+        Task<bool> DeleteCarAsync(int id);
+        
 
     }
 
