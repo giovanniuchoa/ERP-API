@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CarQuery--Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< Updated upstream
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b0f2482874f6936783fd5fb805a2645a80fab207")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f64b671f0328ca5063714194b834e31125f7bea7")]
->>>>>>> Stashed changes
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad3f579026cb2224b62435a4fcfa4c819bc0ed42")]
 [assembly: System.Reflection.AssemblyProductAttribute("CarQuery--Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CarQuery--Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -57,13 +57,7 @@ namespace CarQuery__Test.Controllers
             }
         }
 
-<<<<<<< Updated upstream
-        [HttpPost] //Create a new car
-        public bool CreateCar([FromBody]Car car)
-        {
-            bool result = _carService.CreateCar(car);
-            return result;
-=======
+
 
         [HttpPost] //Create a car
         public async Task<IActionResult> CreateCar([FromBody] Car car)
@@ -83,8 +77,6 @@ namespace CarQuery__Test.Controllers
                 // Log the error (uncomment ex variable name and write a log.)
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
->>>>>>> Stashed changes
-        }
 
 
         [HttpPut("{id}")] //Update a car
@@ -113,12 +105,7 @@ namespace CarQuery__Test.Controllers
 
 
         [HttpDelete("{id}")] //Delete a car
-<<<<<<< Updated upstream
-        public bool DeleteCar(int id)
-        {
-            bool result = _carService.DeleteCar(id);
-            return result;
-=======
+
         public async Task<IActionResult> DeleteCar(int id)
         {
             try
@@ -135,7 +122,6 @@ namespace CarQuery__Test.Controllers
                 // Log the exception details here if needed
                 return StatusCode(500, new { message = "Erro interno do servidor.", details = ex.Message });
             }
->>>>>>> Stashed changes
         }
     }
 }
