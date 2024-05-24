@@ -3,6 +3,7 @@ using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
 using CarQuery__Test.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,12 @@ builder.Services.AddTransient<ICarService, CarService>();
 builder.Services.AddTransient<IPersonService, PersonService>();
 builder.Services.AddTransient<IResellerService, ResellerService>(); 
 builder.Services.AddTransient<ISaleService, SaleService>();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Minha API", Version = "v1" });
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
@@ -36,6 +43,16 @@ builder.Services.AddCors(options =>
 
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Minha API v1");
+        c.RoutePrefix = string.Empty;
+    });
+}
 
 // Configure the HTTP request pipeline.
 
