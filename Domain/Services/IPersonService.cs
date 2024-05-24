@@ -4,11 +4,11 @@ namespace CarQuery__Test.Domain.Services
 {
     public interface IPersonService
     { 
-        IEnumerable<Person> GetAllPersons();
-        IEnumerable<Person> GetPersonById(int id);
-        bool CreatePerson(Person person);
-        IEnumerable<Person> UpdatePerson(int id, Person person);
-        bool DeletePerson(int id);
+        Task<IEnumerable<Person>> GetAllPersonsAsync();
+        Task<Person> GetPersonByIdAsync(int id); 
+        Task<Person> CreatePersonAsync(Person person); 
+        Task<Person> UpdatePersonAsync(int id, Person person);
+        Task<bool> DeletePersonAsync(int id);
 
     }
-}
+}      

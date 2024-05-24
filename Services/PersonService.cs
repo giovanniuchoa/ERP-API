@@ -1,6 +1,8 @@
 ﻿using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace CarQuery__Test.Services
 {
@@ -11,61 +13,101 @@ namespace CarQuery__Test.Services
         {
         }
 
-        public bool CreatePerson(Person person)
+        public static Person ValidatePerson(Person person)
+        {
+
+            if (person != null && !string.IsNullOrEmpty(person.Name) && person.Sex != null && !string.IsNullOrEmpty(person.Cpf) && person.Birth != null)
+            {
+                return person;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<Person> CreatePersonAsync(Person person)
         {
             try
             {
-                _context.Persons.Add(person);
-                _context.SaveChanges();
+
+                var ret = ValidatePerson(person);
+
+                if (ret != null)
+                {
+                    _context.Persons.Add(person);
+                    await _context.SaveChangesAsync();
+                    return person;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception ex)
             {
-                return false;
-            }
 
-            return true;
+                throw new Exception(ex.Message);
+
+            }
         }
 
-        public bool DeletePerson(int id)
+        public async Task<bool> DeletePersonAsync(int id)
         {
             try
             {
-                var existingPerson = _context.Persons.Find(id);
-                _context.Persons.Remove(existingPerson);
-                _context.SaveChanges();
+                var personToDelete = await _context.Persons.FindAsync(id);
+                if (personToDelete == null)
+                {
+                    return false;
+                }
 
+                _context.Persons.Remove(personToDelete);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                return false;
+                throw new Exception("Erro ao excluir a pessoa.", ex);
             }
         }
 
-        public IEnumerable<Person> GetAllPersons()
+        public async Task<IEnumerable<Person>> GetAllPersonsAsync()
         {
-            return _context.Persons.ToList();
-            
+            return await _context.Persons.ToListAsync();
         }
 
-        public IEnumerable<Person> GetPersonById(int id)
+        public async Task<Person> GetPersonByIdAsync(int id)
         {
-            var person = _context.Persons.Find(id);
-            yield return person;
-        } 
+            return await _context.Persons.FindAsync(id);
+        }
 
-        public IEnumerable<Person> UpdatePerson(int id, Person person)
+        public async Task<Person> UpdatePersonAsync(int id, Person person)
         {
-            var existingPerson = _context.Persons.Find(id);
+            var ret = ValidatePerson(person);
+            var existingPerson = await _context.Persons.FindAsync(id);
 
-            existingPerson.Name = person.Name;
-            existingPerson.Birth = person.Birth;
-            existingPerson.Sex = person.Sex;
-            existingPerson.Cpf = person.Cpf;
+            if (ret == null)
+            {
+                return null;
+            }
+            else if (existingPerson == null)
+            {
+                return null;
+            }
+            else
+            {
+                existingPerson.Name = person.Name;
+                existingPerson.Birth = person.Birth;
+                existingPerson.Sex = person.Sex;
+                existingPerson.Cpf = person.Cpf;
 
-            _context.SaveChanges();
+                _context.Persons.Update(existingPerson);
+                await _context.SaveChangesAsync();
 
-            yield return person;
+                return person;
+            }
         }
     }
 }
