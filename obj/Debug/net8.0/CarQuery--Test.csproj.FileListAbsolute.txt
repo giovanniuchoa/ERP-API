@@ -526,3 +526,8 @@ C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.pdb
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.genruntimeconfig.cache
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\ref\CarQuery--Test.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Giovanni\Desktop\API-car\API-car\obj\Debug\net8.0\CarQuery--Test.MvcApplicationPartsAssemblyInfo.cs
