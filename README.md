@@ -16,6 +16,8 @@ Simply follow these steps to get started:
 1. Microsoft.EntityFrameworkCore (8.0.2)
 2. Microsoft.EntityFrameworkCore.SqlServer (8.0.2)
 3. Microsoft.EntityFrameworkCore.Tools (8.0.2)
+4. Newtonsoft.Json (13.0.3)
+
 
 ## Future Implementations
 
