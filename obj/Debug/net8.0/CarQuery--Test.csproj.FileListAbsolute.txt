@@ -525,3 +525,4 @@ C:\Users\Joao\Git\API-car\obj\Debug\net8.0\refint\CarQuery--Test.dll
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.pdb
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.genruntimeconfig.cache
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\ref\CarQuery--Test.dll
+C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Newtonsoft.Json.dll

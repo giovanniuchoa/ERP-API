@@ -32,7 +32,6 @@ namespace CarQuery__Test.Controllers
             }
             catch (Exception ex)
             {
-                // Log the exception here
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
         }
@@ -46,14 +45,13 @@ namespace CarQuery__Test.Controllers
                 var car = await _carService.GetCarByIdAsync(id);
                 if (car == null)
                 {
-                    return NotFound(new { message = "Carro não encontrado." });
+                    return NotFound($"Car not found.");
                 }
                 return Ok(car);
             }
             catch (Exception ex)
             {
-                // Log the exception details here if needed
-                return StatusCode(500, new { message = "Erro interno do servidor.", details = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
@@ -65,47 +63,43 @@ namespace CarQuery__Test.Controllers
             try
             {
                 var createdCar = await _carService.CreateCarAsync(car);
-                return CreatedAtAction(nameof(GetCarById), new { id = createdCar.Id }, createdCar);
-            }
-            catch (DbUpdateException ex)
-            {
-                // Log the error (uncomment ex variable name and write a log.)
-                return StatusCode(500, $"Internal server error: {ex.InnerException?.Message}");
+                if (createdCar == null)
+                {
+                    return BadRequest("Invalid JSON format");
+                } else
+                {
+                    return Ok($"Car created successfully.");
+                }
+                
             }
             catch (Exception ex)
             {
-                // Log the error (uncomment ex variable name and write a log.)
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
 
 
         [HttpPut("{id}")] //Update a car
         public async Task<IActionResult> UpdateCar(int id, [FromBody] Car car)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             try
             {
                 var updatedCar = await _carService.UpdateCarAsync(id, car);
                 if (updatedCar == null)
                 {
-                    return NotFound(new { message = "Carro não encontrado." });
+                    return NotFound($"Failed to update car.");
                 }
-                return Ok(updatedCar);
+                return Ok($"Car updated successfully.");
             }
             catch (Exception ex)
             {
-                // Log the exception details here if needed
-                return StatusCode(500, new { message = "Erro interno do servidor.", details = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
 
 
         [HttpDelete("{id}")] //Delete a car
-
         public async Task<IActionResult> DeleteCar(int id)
         {
             try
@@ -113,14 +107,13 @@ namespace CarQuery__Test.Controllers
                 var result = await _carService.DeleteCarAsync(id);
                 if (result == false)
                 {
-                    return NotFound(new { message = "Carro não encontrado." });
+                    return NotFound($"Car not found.");
                 }
-                return Ok(new { message = "Carro deletado." });
+                return Ok($"Car ID ({id}) deleted successfully.");
             }
             catch (Exception ex)
             {
-                // Log the exception details here if needed
-                return StatusCode(500, new { message = "Erro interno do servidor.", details = ex.Message });
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
     }

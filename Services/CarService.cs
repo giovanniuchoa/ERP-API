@@ -12,19 +12,44 @@ namespace CarQuery__Test.Services
         {
         }
 
+        public static Car ValidateCar(Car car)
+        {
+
+            if (car != null && !string.IsNullOrEmpty(car.Name) && !string.IsNullOrEmpty(car.Brand) && car.Year != 0)
+            {
+                return car;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
         public async Task<Car> CreateCarAsync(Car car)
         {
+
             try
             {
+
+                var ret = ValidateCar(car);
+
+                if (ret != null)
+                {
                 _context.Cars.Add(car);
                 await _context.SaveChangesAsync();
                 return car;
+                } else
+                {
+                    return null;
+                }
+
             }
-            catch (DbUpdateException ex)
+            catch (Exception ex)
             {
-                // Log the error (uncomment ex variable name and write a log.)
-                Console.WriteLine($"An error occurred while saving the entity changes: {ex.InnerException?.Message}");
-                throw; // Re-throw the exception to handle it in the controller
+
+                throw new Exception(ex.Message);
+                
             }
         }
 
@@ -36,16 +61,15 @@ namespace CarQuery__Test.Services
                 var carToDelete = await _context.Cars.FindAsync(id);
                 if (carToDelete == null)
                 {
-                    return false; // Retorna false se o carro não for encontrado
+                    return false;
                 }
 
                 _context.Cars.Remove(carToDelete);
                 await _context.SaveChangesAsync();
-                return true; // Retorna true se a exclusão for bem-sucedida
+                return true; 
             }
             catch (Exception ex)
             {
-                // Você pode registrar a exceção ou lançá-la novamente se desejar
                 throw new Exception("Erro ao excluir o carro.", ex);
             }
         }
@@ -66,20 +90,30 @@ namespace CarQuery__Test.Services
 
         public async Task<Car> UpdateCarAsync(int id, Car car)
         {
+
+            var ret = ValidateCar(car);
             var existingCar = await _context.Cars.FindAsync(id);
-            if (existingCar == null)
+
+            if (ret == null)
+            {
+                return null;
+            } 
+            else if (existingCar == null)
             {
                 return null;
             }
+            else
+            {
+                existingCar.Name = car.Name;
+                existingCar.Brand = car.Brand;
+                existingCar.Year = car.Year;
 
-            existingCar.Name = car.Name;
-            existingCar.Brand = car.Brand;
-            existingCar.Year = car.Year;
+                _context.Cars.Update(existingCar);
+                await _context.SaveChangesAsync();
 
-            _context.Cars.Update(existingCar);
-            await _context.SaveChangesAsync();
+                return car;
+            }
 
-            return existingCar;
         }
 
     }
