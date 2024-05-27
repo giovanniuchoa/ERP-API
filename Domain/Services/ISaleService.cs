@@ -4,11 +4,11 @@ namespace CarQuery__Test.Domain.Services
 {
     public interface ISaleService
     {
-        IEnumerable<Sale> GetAllSales();
-        IEnumerable<Sale> GetSaleById(int id);
-        bool CreateSale(Sale sale);
-        IEnumerable<Sale> UpdateSale(int id, Sale sale);
-        bool DeleteSale(int id);
+        Task<IEnumerable<Sale>> GetAllSalesAsync();
+        Task<Sale> GetSaleByIdAsync(int id);
+        Task<Sale> CreateSaleAsync(Sale sale);
+        Task<Sale> UpdateSaleAsync(int id, Sale sale);
+        Task<bool> DeleteSaleAsync(int id);
 
     } 
 }

@@ -1,5 +1,6 @@
 ﻿using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
+using CarQuery__Test.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarQuery__Test.Controllers
@@ -17,38 +18,98 @@ namespace CarQuery__Test.Controllers
         }
 
         [HttpGet] //Get all Sales
-        public IEnumerable<Sale> GetAllSales()
-        {
-            var sales = _saleService.GetAllSales();
-            return sales;
+        public async Task<IActionResult> GetAllSales()
+        { 
+            try
+            {
+                var sales = await _saleService.GetAllSalesAsync();
+                if (sales == null || !sales.Any())
+                {
+                    return NotFound("No sales found.");
+                }
+                return Ok(sales);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
         [HttpGet("{id}")] //Get Sale by id
-        public IEnumerable<Sale> GetSale(int id)
+        public async Task<IActionResult> GetSale(int id)
         {
-            var sale = _saleService.GetSaleById(id);
-            return sale;
+            try
+            {
+                var sale = await _saleService.GetSaleByIdAsync(id);
+                if (sale == null)
+                {
+                    return NotFound($"Sale not found.");
+                }
+                return Ok(sale);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPost] //Create a new Sale
-        public bool CreateSale([FromBody] Sale sale)
+        public async Task<IActionResult> CreateSale([FromBody] Sale sale)
         {
-            bool result = _saleService.CreateSale(sale);
-            return result;
+            try
+            {
+                var createdSale = await _saleService.CreateSaleAsync(sale);
+                if (createdSale == null)
+                {
+                    return BadRequest("Invalid JSON format");
+                }
+                else
+                {
+                    return Ok($"Sale created successfully.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")] //Update a Sale
-        public IEnumerable<Sale> UpdateSale(int id, [FromBody] Sale sale)
+        public async Task<IActionResult> UpdateSale(int id, [FromBody] Sale sale)
         {
-            var newSale = _saleService.UpdateSale(id, sale);
-            return newSale;
+
+            try
+            {
+                var updatedSale = await _saleService.UpdateSaleAsync(id, sale);
+                if (updatedSale == null)
+                {
+                    return NotFound($"Failed to update sale.");
+                }
+                return Ok($"Sale updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")] //Delete a Sale
-        public bool DeleteSale(int id)
+        public async Task<IActionResult> DeleteSale(int id)
         {
-            bool result = _saleService.DeleteSale(id);
-            return result;
+            try
+            {
+                var result = await _saleService.DeleteSaleAsync(id);
+                if (result == false)
+                {
+                    return NotFound($"Sale not found.");
+                }
+                return Ok($"Sale ID ({id}) deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }
