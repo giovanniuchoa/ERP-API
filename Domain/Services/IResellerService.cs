@@ -5,11 +5,12 @@ namespace CarQuery__Test.Domain.Services
     public interface IResellerService
     {
 
-        IEnumerable<Reseller> GetAllResellers(); 
-        IEnumerable<Reseller> GetResellerById(int id);
-        bool CreateReseller(Reseller reseller);
-        IEnumerable<Reseller> UpdateReseller(int id, Reseller reseller);
-        bool DeleteReseller(int id); 
+        Task<IEnumerable<Reseller>> GetAllResellersAsync();
+        Task<Reseller> GetResellerByIdAsync(int id);
+        Task<Reseller> CreateResellerAsync(Reseller reseller);
+        Task<Reseller> UpdateResellerAsync(int id, Reseller reseller);
+        Task<bool> DeleteResellerAsync(int id); 
 
     }
 }
+ 

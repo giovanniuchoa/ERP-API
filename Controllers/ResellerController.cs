@@ -1,5 +1,6 @@
 ﻿using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
+using CarQuery__Test.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarQuery__Test.Controllers
@@ -16,38 +17,97 @@ namespace CarQuery__Test.Controllers
         }
 
         [HttpGet] //Get all Resellers
-        public IEnumerable<Reseller> GetAllResellers()
+        public async Task<IActionResult> GetAllResellers()
         {
-            var resellers = _resellerService.GetAllResellers();
-            return resellers;
+            try
+            {
+                var resellers = await _resellerService.GetAllResellersAsync();
+                if (resellers == null || !resellers.Any())
+                {
+                    return NotFound("No resellers found.");
+                }
+                return Ok(resellers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
         }
 
         [HttpGet("{id}")] //Get Reseller by id
-        public IEnumerable<Reseller> GetReseller(int id)
+        public async Task<IActionResult> GetReseller(int id)
         {
-            var reseller = _resellerService.GetResellerById(id);
-            return reseller;
+            try
+            {
+                var reseller = await _resellerService.GetResellerByIdAsync(id);
+                if (reseller == null)
+                {
+                    return NotFound($"Reseller not found.");
+                }
+                return Ok(reseller);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPost] //Create a new Reseller
-        public bool CreateReseller([FromBody] Reseller reseller)
+        public async Task<IActionResult> CreateReseller([FromBody] Reseller reseller)
         {
-            bool result = _resellerService.CreateReseller(reseller);
-            return result;
+            try
+            {
+                var createdReseller = await _resellerService.CreateResellerAsync(reseller);
+                if (createdReseller == null)
+                {
+                    return BadRequest("Invalid JSON format");
+                }
+                else
+                {
+                    return Ok($"Reseller created successfully.");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPut("{id}")] //Update a Reseller
-        public IEnumerable<Reseller> UpdateReseller(int id, [FromBody] Reseller reseller)
+        public async Task<IActionResult> UpdateReseller(int id, [FromBody] Reseller reseller)
         {
-            var newReseller = _resellerService.UpdateReseller(id, reseller);
-            return newReseller;
+            try
+            {
+                var updatedReseller = await _resellerService.UpdateResellerAsync(id, reseller);
+                if (updatedReseller == null)
+                {
+                    return NotFound($"Failed to update Reseller.");
+                }
+                return Ok($"Reseller updated successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpDelete("{id}")] //Delete a Reseller
-        public bool DeleteReseller(int id)
+        public async Task<IActionResult> DeleteReseller(int id)
         {
-            bool result = _resellerService.DeleteReseller(id);
-            return result;
+            try
+            {
+                var result = await _resellerService.DeleteResellerAsync(id);
+                if (result == false)
+                {
+                    return NotFound($"Reseller not found.");
+                }
+                return Ok($"Reseller ID ({id}) deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
     }

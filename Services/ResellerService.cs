@@ -1,6 +1,7 @@
 ﻿using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarQuery__Test.Services
 {
@@ -11,60 +12,99 @@ namespace CarQuery__Test.Services
         {
         }
 
-        public bool CreateReseller(Reseller reseller)
+        public static Reseller ValidateReseller(Reseller reseller)
+        {
+
+            if (reseller != null && !string.IsNullOrEmpty(reseller.Name) && !string.IsNullOrEmpty(reseller.Address))
+            {
+                return reseller;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<Reseller> CreateResellerAsync(Reseller reseller)
         {
             try
             {
-                _context.Resellers.Add(reseller);
-                _context.SaveChanges();
+
+                var ret = ValidateReseller(reseller);
+
+                if (ret != null)
+                {
+                    _context.Resellers.Add(reseller);
+                    await _context.SaveChangesAsync();
+                    return reseller;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (Exception ex)
             {
-                return false;
-            }
 
-            return true;
+                throw new Exception(ex.Message);
+
+            }
         }
 
-        public bool DeleteReseller(int id)
+        public async Task<bool> DeleteResellerAsync(int id)
         {
             try
             {
-                var existingReseller = _context.Resellers.Find(id);
-                _context.Resellers.Remove(existingReseller);
-                _context.SaveChanges();
+                var resellerToDelete = await _context.Resellers.FindAsync(id);
+                if (resellerToDelete == null)
+                {
+                    return false;
+                }
 
+                _context.Resellers.Remove(resellerToDelete);
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch (Exception ex)
             {
-                return false;
+                throw new Exception("Failed to delete Reseller.", ex);
             }
         }
 
-        public IEnumerable<Reseller> GetAllResellers()
+        public async Task<IEnumerable<Reseller>> GetAllResellersAsync()
         {
-            return _context.Resellers.ToList();
-
+            return await _context.Resellers.ToListAsync();
         }
 
-        public IEnumerable<Reseller> GetResellerById(int id)
+        public async Task<Reseller> GetResellerByIdAsync(int id)
         {
-            var reseller = _context.Resellers.Find(id);
-            yield return reseller; 
+            return await _context.Resellers.FindAsync(id);
         }
 
-        public IEnumerable<Reseller> UpdateReseller(int id, Reseller reseller) 
+        public async Task<Reseller> UpdateResellerAsync(int id, Reseller reseller)
         {
-            var existingReseller = _context.Resellers.Find(id);
+            var ret = ValidateReseller(reseller);
+            var existingReseller = await _context.Resellers.FindAsync(id);
 
-            existingReseller.Name = reseller.Name;
-            existingReseller.Address = reseller.Address; 
+            if (ret == null)
+            {
+                return null;
+            }
+            else if (existingReseller == null)
+            {
+                return null;
+            }
+            else
+            {
+                existingReseller.Name = reseller.Name;
+                existingReseller.Address = reseller.Address;
 
-            _context.SaveChanges();
+                _context.Resellers.Update(existingReseller);
+                await _context.SaveChangesAsync();
 
-            yield return reseller;
+                return reseller;
+            }
         }
-
     }
 }
