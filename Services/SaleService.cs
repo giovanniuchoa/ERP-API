@@ -75,12 +75,20 @@ namespace CarQuery__Test.Services
 
         public async Task<IEnumerable<Sale>> GetAllSalesAsync()
         {
-            return await _context.Sales.ToListAsync();
+            return await _context.Sales
+                .Include(s => s.Person)
+                .Include(s => s.Car)
+                .Include(s => s.Reseller)
+                .ToListAsync();
         }
 
         public async Task<Sale> GetSaleByIdAsync(int id)
         {
-            return await _context.Sales.FindAsync(id);
+            return await _context.Sales
+                .Include(s => s.Person)
+                .Include(s => s.Car)
+                .Include(s => s.Reseller)
+                .SingleOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<Sale> UpdateSaleAsync(int id, Sale sale)
@@ -106,7 +114,7 @@ namespace CarQuery__Test.Services
                 _context.Sales.Update(existingSale);
                 await _context.SaveChangesAsync();
 
-                return sale;
+                return existingSale;
             }
         }
     }

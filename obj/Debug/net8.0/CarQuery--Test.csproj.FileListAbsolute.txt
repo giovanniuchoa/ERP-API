@@ -531,3 +531,4 @@ C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCor
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\obj\Debug\net8.0\CarQuery--Test.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll

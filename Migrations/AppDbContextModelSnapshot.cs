@@ -43,7 +43,7 @@ namespace CarQuery__Test.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cars");
+                    b.ToTable("Cars", (string)null);
                 });
 
             modelBuilder.Entity("CarQuery__Test.Domain.Models.Person", b =>
@@ -70,7 +70,7 @@ namespace CarQuery__Test.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Persons");
+                    b.ToTable("Persons", (string)null);
                 });
 
             modelBuilder.Entity("CarQuery__Test.Domain.Models.Reseller", b =>
@@ -91,7 +91,7 @@ namespace CarQuery__Test.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Resellers");
+                    b.ToTable("Resellers", (string)null);
                 });
 
             modelBuilder.Entity("CarQuery__Test.Domain.Models.Sale", b =>
@@ -122,7 +122,7 @@ namespace CarQuery__Test.Migrations
 
                     b.HasIndex("IdReseller");
 
-                    b.ToTable("Sales");
+                    b.ToTable("Sales", (string)null);
                 });
 
             modelBuilder.Entity("CarQuery__Test.Domain.Models.Sale", b =>

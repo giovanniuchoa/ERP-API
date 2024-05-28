@@ -21,7 +21,7 @@ builder.Services.AddTransient<ISaleService, SaleService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Minha API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "API - Car", Version = "v1" });
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -50,6 +50,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "API - Car");
+        c.DocumentTitle = "API - Car";
         c.RoutePrefix = string.Empty;
     });
 }
