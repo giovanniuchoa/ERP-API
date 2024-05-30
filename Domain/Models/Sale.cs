@@ -8,24 +8,31 @@ namespace CarQuery__Test.Domain.Models
     {
         [Key]
         [SwaggerIgnore]
-        public int Id{ get; set; }
+        public int idSale{ get; set; }
 
-        [ForeignKey("Person")] 
-        public int IdPerson { get; set; }
+        public int Fk_IdClient { get; set; }
+        [ForeignKey(nameof(Fk_IdClient))]
         [SwaggerIgnore]
-        public Person? Person { get; set; }
+        public User? Client { get; set; }
 
-        [ForeignKey("Car")]
-        public int IdCar { get; set; }
+        public int Fk_IdSeller { get; set; }
+        [ForeignKey(nameof(Fk_IdSeller))]
+        [SwaggerIgnore]
+        public User? Seller { get; set; }
+
+        public int Fk_IdCar { get; set; }
+        [ForeignKey(nameof(Fk_IdCar))]
         [SwaggerIgnore]
         public Car? Car { get; set; }
 
-        [ForeignKey("Reseller")]
-        public int IdReseller { get; set; }
+        public int Fk_IdReseller { get; set; }
+        [ForeignKey(nameof(Fk_IdReseller))]
         [SwaggerIgnore]
         public Reseller? Reseller { get; set; }
 
-        public decimal Price { get; set; }      
+        public DateTime DthRegister { get; set; } 
+
+        public decimal price { get; set; }      
 
     }
 }

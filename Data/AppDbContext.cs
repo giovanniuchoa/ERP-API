@@ -8,7 +8,7 @@ namespace CarQuery__Test.Data
 
         public DbSet<Car> Cars { get; set; }
 
-        public DbSet<Person> Persons { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Reseller> Resellers { get; set; }
 

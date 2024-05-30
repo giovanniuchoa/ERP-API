@@ -15,7 +15,8 @@ namespace CarQuery__Test.Services
         public static Car ValidateCar(Car car)
         {
 
-            if (car != null && !string.IsNullOrEmpty(car.Name) && !string.IsNullOrEmpty(car.Brand) && car.Year != 0)
+            if (car != null && !string.IsNullOrEmpty(car.model) && !string.IsNullOrEmpty(car.brand) && car.year != 0
+                && car.color != 0 && car.price != 0)
             {
                 return car;
             }
@@ -104,9 +105,11 @@ namespace CarQuery__Test.Services
             }
             else
             {
-                existingCar.Name = car.Name;
-                existingCar.Brand = car.Brand;
-                existingCar.Year = car.Year;
+                existingCar.model = car.model;
+                existingCar.brand = car.brand;
+                existingCar.year = car.year;
+                existingCar.price = car.price;
+                existingCar.color = car.color;
 
                 _context.Cars.Update(existingCar);
                 await _context.SaveChangesAsync();

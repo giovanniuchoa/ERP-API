@@ -15,7 +15,8 @@ namespace CarQuery__Test.Services
         public static Reseller ValidateReseller(Reseller reseller)
         {
 
-            if (reseller != null && !string.IsNullOrEmpty(reseller.Name) && !string.IsNullOrEmpty(reseller.Address))
+            if (reseller != null && !string.IsNullOrEmpty(reseller.nameReseller) && !string.IsNullOrEmpty(reseller.address) 
+                && !string.IsNullOrEmpty(reseller.brand) && reseller.classification != null)
             {
                 return reseller;
             }
@@ -97,8 +98,10 @@ namespace CarQuery__Test.Services
             }
             else
             {
-                existingReseller.Name = reseller.Name;
-                existingReseller.Address = reseller.Address;
+                existingReseller.nameReseller = reseller.nameReseller;
+                existingReseller.address = reseller.address;
+                existingReseller.brand = reseller.brand;
+                existingReseller.classification = reseller.classification;
 
                 _context.Resellers.Update(existingReseller);
                 await _context.SaveChangesAsync();

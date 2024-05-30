@@ -16,7 +16,8 @@ namespace CarQuery__Test.Services
         public static Sale ValidateSale(Sale sale)
         {
 
-            if (sale != null && sale.IdPerson != 0 && sale.IdCar != 0 && sale.IdReseller != 0 && sale.Price != 0)
+            if (sale != null && sale.Fk_IdClient != 0 && sale.Fk_IdSeller != 0 && sale.Fk_IdCar != 0 && sale.price != 0
+                && sale.Fk_IdReseller != 0 && sale.DthRegister != null)
             {
                 return sale;
             }
@@ -76,7 +77,8 @@ namespace CarQuery__Test.Services
         public async Task<IEnumerable<Sale>> GetAllSalesAsync()
         {
             return await _context.Sales
-                .Include(s => s.Person)
+                .Include(s => s.Client)
+                .Include(s => s.Seller)
                 .Include(s => s.Car)
                 .Include(s => s.Reseller)
                 .ToListAsync();
@@ -85,10 +87,11 @@ namespace CarQuery__Test.Services
         public async Task<Sale> GetSaleByIdAsync(int id)
         {
             return await _context.Sales
-                .Include(s => s.Person)
+                .Include(s => s.Client)
+                .Include(s => s.Seller)
                 .Include(s => s.Car)
                 .Include(s => s.Reseller)
-                .SingleOrDefaultAsync(s => s.Id == id);
+                .SingleOrDefaultAsync(s => s.idSale == id);
         }
 
         public async Task<Sale> UpdateSaleAsync(int id, Sale sale)
@@ -106,10 +109,12 @@ namespace CarQuery__Test.Services
             }
             else
             {
-                existingSale.IdPerson = sale.IdPerson;
-                existingSale.IdCar = sale.IdCar;
-                existingSale.IdReseller = sale.IdReseller;
-                existingSale.Price = sale.Price;
+                existingSale.Fk_IdClient = sale.Fk_IdClient;
+                existingSale.Fk_IdSeller = sale.Fk_IdSeller;
+                existingSale.Fk_IdReseller = sale.Fk_IdReseller;
+                existingSale.Fk_IdCar = sale.Fk_IdCar;
+                existingSale.DthRegister = sale.DthRegister;
+                existingSale.price = sale.price;
 
                 _context.Sales.Update(existingSale);
                 await _context.SaveChangesAsync();
