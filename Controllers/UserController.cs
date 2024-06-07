@@ -1,12 +1,14 @@
 ﻿using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
 using CarQuery__Test.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarQuery__Test.Controllers
 {
 
     [Route("User")]
+    [Authorize]
     public class UserController : ControllerBase 
     {
 
@@ -15,6 +17,31 @@ namespace CarQuery__Test.Controllers
         public UserController(IUserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpPost("authenticate"), AllowAnonymous] //Authenticate user
+        public async Task<IActionResult> Authenticate(UserAuthenticateRequest userAuthenticated)
+        {
+
+            try
+            {
+                var login = await _userService.AuthenticateAsync(userAuthenticated);
+
+                if (login == null)
+                {
+                    return BadRequest($"Incorrect User or Password");
+                }
+                else
+                {
+                    return Ok(login);
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+            
         }
 
         [HttpGet] //Get all users

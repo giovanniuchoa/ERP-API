@@ -1,11 +1,13 @@
 ﻿using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
 using CarQuery__Test.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarQuery__Test.Controllers
 {
     [Route("Reseller")]
+    [Authorize]
     public class ResellerController : ControllerBase
     {
 

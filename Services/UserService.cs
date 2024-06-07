@@ -1,4 +1,5 @@
-﻿using CarQuery__Test.Data;
+﻿using CarQuery__Test.Authentication.Services;
+using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,32 @@ namespace CarQuery__Test.Services
 
         public UserService(AppDbContext context) : base(context)
         {
+        }
+
+        public async Task<UserAuthenticateResponse> AuthenticateAsync(UserAuthenticateRequest user)
+        {
+
+            try
+            {
+                User _user = _context.Users.FirstOrDefault(u => u.email == user.Email);
+
+                if (_user == null)
+                {
+                    return null;
+                }
+                else if (user.Password != _user.password)
+                {
+                    return null;
+                }
+
+                string token = await TokenService.GenerateTokenAsync(_user);
+                return new UserAuthenticateResponse(_user, token);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
 
         public static User ValidateUser(User user)

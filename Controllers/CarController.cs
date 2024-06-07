@@ -1,6 +1,7 @@
 ﻿using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
 using CarQuery__Test.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,7 @@ namespace CarQuery__Test.Controllers
 {
 
     [Route("Car")]
+    [Authorize]
     public class CarController : ControllerBase
     {
 
