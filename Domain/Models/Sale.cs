@@ -25,11 +25,6 @@ namespace CarQuery__Test.Domain.Models
         [SwaggerIgnore]
         public Car? Car { get; set; }
 
-        public int Fk_IdReseller { get; set; }
-        [ForeignKey(nameof(Fk_IdReseller))]
-        [SwaggerIgnore]
-        public Reseller? Reseller { get; set; }
-
         public DateTime DthRegister { get; set; } 
 
         public decimal price { get; set; }      

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace CarQuery__Test.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateModels : Migration
+    public partial class RemovingReseller : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -26,22 +26,6 @@ namespace CarQuery__Test.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Cars", x => x.idCar);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Resellers",
-                columns: table => new
-                {
-                    idReseller = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    nameReseller = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    brand = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    classification = table.Column<byte>(type: "tinyint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Resellers", x => x.idReseller);
                 });
 
             migrationBuilder.CreateTable(
@@ -70,14 +54,9 @@ namespace CarQuery__Test.Migrations
                 {
                     idSale = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    fk_idClient = table.Column<int>(type: "int", nullable: false),
-                    clientidUser = table.Column<int>(type: "int", nullable: true),
-                    fk_idSeller = table.Column<int>(type: "int", nullable: false),
-                    selleridUser = table.Column<int>(type: "int", nullable: true),
-                    fk_idCar = table.Column<int>(type: "int", nullable: false),
-                    caridCar = table.Column<int>(type: "int", nullable: true),
-                    fk_idReseller = table.Column<int>(type: "int", nullable: false),
-                    reselleridReseller = table.Column<int>(type: "int", nullable: true),
+                    Fk_IdClient = table.Column<int>(type: "int", nullable: false),
+                    Fk_IdSeller = table.Column<int>(type: "int", nullable: false),
+                    Fk_IdCar = table.Column<int>(type: "int", nullable: false),
                     DthRegister = table.Column<DateTime>(type: "datetime2", nullable: false),
                     price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
@@ -85,46 +64,36 @@ namespace CarQuery__Test.Migrations
                 {
                     table.PrimaryKey("PK_Sales", x => x.idSale);
                     table.ForeignKey(
-                        name: "FK_Sales_Cars_caridCar",
-                        column: x => x.caridCar,
+                        name: "FK_Sales_Cars_Fk_IdCar",
+                        column: x => x.Fk_IdCar,
                         principalTable: "Cars",
                         principalColumn: "idCar");
                     table.ForeignKey(
-                        name: "FK_Sales_Resellers_reselleridReseller",
-                        column: x => x.reselleridReseller,
-                        principalTable: "Resellers",
-                        principalColumn: "idReseller");
-                    table.ForeignKey(
-                        name: "FK_Sales_Users_clientidUser",
-                        column: x => x.clientidUser,
+                        name: "FK_Sales_Users_Fk_IdClient",
+                        column: x => x.Fk_IdClient,
                         principalTable: "Users",
                         principalColumn: "idUser");
                     table.ForeignKey(
-                        name: "FK_Sales_Users_selleridUser",
-                        column: x => x.selleridUser,
+                        name: "FK_Sales_Users_Fk_IdSeller",
+                        column: x => x.Fk_IdSeller,
                         principalTable: "Users",
                         principalColumn: "idUser");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_caridCar",
+                name: "IX_Sales_Fk_IdCar",
                 table: "Sales",
-                column: "caridCar");
+                column: "Fk_IdCar");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_clientidUser",
+                name: "IX_Sales_Fk_IdClient",
                 table: "Sales",
-                column: "clientidUser");
+                column: "Fk_IdClient");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Sales_reselleridReseller",
+                name: "IX_Sales_Fk_IdSeller",
                 table: "Sales",
-                column: "reselleridReseller");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Sales_selleridUser",
-                table: "Sales",
-                column: "selleridUser");
+                column: "Fk_IdSeller");
         }
 
         /// <inheritdoc />
@@ -135,9 +104,6 @@ namespace CarQuery__Test.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cars");
-
-            migrationBuilder.DropTable(
-                name: "Resellers");
 
             migrationBuilder.DropTable(
                 name: "Users");

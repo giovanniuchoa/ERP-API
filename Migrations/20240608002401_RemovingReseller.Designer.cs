@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarQuery__Test.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240530002025_UpdateModels")]
-    partial class UpdateModels
+    [Migration("20240608002401_RemovingReseller")]
+    partial class RemovingReseller
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,34 +55,6 @@ namespace CarQuery__Test.Migrations
                     b.ToTable("Cars");
                 });
 
-            modelBuilder.Entity("CarQuery__Test.Domain.Models.Reseller", b =>
-                {
-                    b.Property<int>("idReseller")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("idReseller"));
-
-                    b.Property<string>("address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("brand")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte>("classification")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("nameReseller")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("idReseller");
-
-                    b.ToTable("Resellers");
-                });
-
             modelBuilder.Entity("CarQuery__Test.Domain.Models.Sale", b =>
                 {
                     b.Property<int>("idSale")
@@ -94,42 +66,25 @@ namespace CarQuery__Test.Migrations
                     b.Property<DateTime>("DthRegister")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("caridCar")
+                    b.Property<int>("Fk_IdCar")
                         .HasColumnType("int");
 
-                    b.Property<int?>("clientidUser")
+                    b.Property<int>("Fk_IdClient")
                         .HasColumnType("int");
 
-                    b.Property<int>("fk_idCar")
-                        .HasColumnType("int");
-
-                    b.Property<int>("fk_idClient")
-                        .HasColumnType("int");
-
-                    b.Property<int>("fk_idReseller")
-                        .HasColumnType("int");
-
-                    b.Property<int>("fk_idSeller")
+                    b.Property<int>("Fk_IdSeller")
                         .HasColumnType("int");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("reselleridReseller")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("selleridUser")
-                        .HasColumnType("int");
-
                     b.HasKey("idSale");
 
-                    b.HasIndex("caridCar");
+                    b.HasIndex("Fk_IdCar");
 
-                    b.HasIndex("clientidUser");
+                    b.HasIndex("Fk_IdClient");
 
-                    b.HasIndex("reselleridReseller");
-
-                    b.HasIndex("selleridUser");
+                    b.HasIndex("Fk_IdSeller");
 
                     b.ToTable("Sales");
                 });
@@ -178,29 +133,29 @@ namespace CarQuery__Test.Migrations
 
             modelBuilder.Entity("CarQuery__Test.Domain.Models.Sale", b =>
                 {
-                    b.HasOne("CarQuery__Test.Domain.Models.Car", "car")
+                    b.HasOne("CarQuery__Test.Domain.Models.Car", "Car")
                         .WithMany()
-                        .HasForeignKey("caridCar");
+                        .HasForeignKey("Fk_IdCar")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("CarQuery__Test.Domain.Models.User", "client")
+                    b.HasOne("CarQuery__Test.Domain.Models.User", "Client")
                         .WithMany()
-                        .HasForeignKey("clientidUser");
+                        .HasForeignKey("Fk_IdClient")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("CarQuery__Test.Domain.Models.Reseller", "reseller")
+                    b.HasOne("CarQuery__Test.Domain.Models.User", "Seller")
                         .WithMany()
-                        .HasForeignKey("reselleridReseller");
+                        .HasForeignKey("Fk_IdSeller")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
-                    b.HasOne("CarQuery__Test.Domain.Models.User", "seller")
-                        .WithMany()
-                        .HasForeignKey("selleridUser");
+                    b.Navigation("Car");
 
-                    b.Navigation("car");
+                    b.Navigation("Client");
 
-                    b.Navigation("client");
-
-                    b.Navigation("reseller");
-
-                    b.Navigation("seller");
+                    b.Navigation("Seller");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,7 +17,7 @@ namespace CarQuery__Test.Services
         {
 
             if (sale != null && sale.Fk_IdClient != 0 && sale.Fk_IdSeller != 0 && sale.Fk_IdCar != 0 && sale.price != 0
-                && sale.Fk_IdReseller != 0 && sale.DthRegister != null)
+                && sale.DthRegister != null)
             {
                 return sale;
             }
@@ -80,7 +80,6 @@ namespace CarQuery__Test.Services
                 .Include(s => s.Client)
                 .Include(s => s.Seller)
                 .Include(s => s.Car)
-                .Include(s => s.Reseller)
                 .ToListAsync();
         }
 
@@ -90,7 +89,6 @@ namespace CarQuery__Test.Services
                 .Include(s => s.Client)
                 .Include(s => s.Seller)
                 .Include(s => s.Car)
-                .Include(s => s.Reseller)
                 .SingleOrDefaultAsync(s => s.idSale == id);
         }
 
@@ -111,7 +109,6 @@ namespace CarQuery__Test.Services
             {
                 existingSale.Fk_IdClient = sale.Fk_IdClient;
                 existingSale.Fk_IdSeller = sale.Fk_IdSeller;
-                existingSale.Fk_IdReseller = sale.Fk_IdReseller;
                 existingSale.Fk_IdCar = sale.Fk_IdCar;
                 existingSale.DthRegister = sale.DthRegister;
                 existingSale.price = sale.price;

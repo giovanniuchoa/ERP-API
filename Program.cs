@@ -41,7 +41,6 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddControllers();
 builder.Services.AddTransient<ICarService, CarService>();
 builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IResellerService, ResellerService>();
 builder.Services.AddTransient<ISaleService, SaleService>();
 
 builder.Services.AddEndpointsApiExplorer();
