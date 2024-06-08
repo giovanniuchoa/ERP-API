@@ -525,7 +525,6 @@ C:\Users\Joao\Git\API-car\obj\Debug\net8.0\refint\CarQuery--Test.dll
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.pdb
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.genruntimeconfig.cache
 C:\Users\Joao\Git\API-car\obj\Debug\net8.0\ref\CarQuery--Test.dll
-C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
@@ -533,5 +532,3 @@ C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCor
 C:\Users\Giovanni\Desktop\API-car\API-car\obj\Debug\net8.0\CarQuery--Test.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
-C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\AutoMapper.dll
-C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

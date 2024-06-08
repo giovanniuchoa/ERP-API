@@ -1,9 +1,11 @@
-﻿using CarQuery__Test.Domain.Models;
+﻿using CarQuery__Test.Authentication.Services;
+using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
 using CarQuery__Test.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace CarQuery__Test.Controllers
 {
@@ -62,6 +64,13 @@ namespace CarQuery__Test.Controllers
         [HttpPost] //Create a car
         public async Task<IActionResult> CreateCar([FromBody] Car car)
         {
+            string role = TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Role);
+
+            if (role.Equals("S") || role.Equals("U"))
+            {
+                return BadRequest($"User without access");
+            }
+
             try
             {
                 var createdCar = await _carService.CreateCarAsync(car);
@@ -84,6 +93,12 @@ namespace CarQuery__Test.Controllers
         [HttpPut("{id}")] //Update a car
         public async Task<IActionResult> UpdateCar(int id, [FromBody] Car car)
         {
+            string role = TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Role);
+
+            if (role.Equals("S") || role.Equals("U"))
+            {
+                return BadRequest($"User without access");
+            }
 
             try
             {
@@ -104,6 +119,13 @@ namespace CarQuery__Test.Controllers
         [HttpDelete("{id}")] //Delete a car
         public async Task<IActionResult> DeleteCar(int id)
         {
+            string role = TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Role);
+
+            if (role.Equals("S") || role.Equals("U"))
+            {
+                return BadRequest($"User without access");
+            }
+
             try
             {
                 var result = await _carService.DeleteCarAsync(id);

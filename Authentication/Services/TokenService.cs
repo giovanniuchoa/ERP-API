@@ -56,11 +56,11 @@ namespace CarQuery__Test.Authentication.Services
             return Task.Run(() => GenerateToken(user));
         }
 
-        //public static string GetValueFromClaim(IIdentity identity, string field)
-        //{
-        //    var claims = identity as ClaimsIdentity;
+        public static string GetValueFromClaim(IIdentity identity, string field)
+        {
+            var claims = identity as ClaimsIdentity;
 
-        //    return claims.FindFirst(field).Value;
-        //}
+            return claims.FindFirst(field).Value;
+        }
     }
 }
