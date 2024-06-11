@@ -75,6 +75,10 @@
             "Swashbuckle.AspNetCore.Annotations": {
               "target": "Package",
               "version": "[6.6.2, )"
+            },
+            "System.Security.Cryptography.Cng": {
+              "target": "Package",
+              "version": "[5.0.0, )"
             }
           },
           "imports": [
