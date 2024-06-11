@@ -14,7 +14,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.2",
           "Microsoft.EntityFrameworkCore.Tools": "8.0.2",
           "Swashbuckle.AspNetCore": "6.6.2",
-          "Swashbuckle.AspNetCore.Annotations": "6.6.2"
+          "Swashbuckle.AspNetCore.Annotations": "6.6.2",
+          "System.Security.Cryptography.Cng": "5.0.0"
         },
         "runtime": {
           "CarQuery--Test.dll": {}

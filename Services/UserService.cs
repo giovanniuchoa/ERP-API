@@ -1,4 +1,5 @@
 ﻿using CarQuery__Test.Authentication.Services;
+using CarQuery__Test.Cryptography;
 using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
 using CarQuery__Test.Domain.Services;
@@ -25,7 +26,7 @@ namespace CarQuery__Test.Services
                 {
                     return null;
                 }
-                else if (user.Password != _user.password)
+                else if (user.Password.GenerateHash() != _user.password)
                 {
                     return null;
                 }
@@ -64,6 +65,8 @@ namespace CarQuery__Test.Services
 
                 if (ret != null)
                 {
+                    user.password = user.password.GenerateHash();
+
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
                     return user;
@@ -129,7 +132,7 @@ namespace CarQuery__Test.Services
             {
                 existingUser.nameUser = user.nameUser;
                 existingUser.cpf = user.cpf;
-                existingUser.password = user.password;
+                existingUser.password = user.password.GenerateHash();
                 existingUser.email = user.email;
                 existingUser.phone = user.phone;
                 existingUser.birth = user.birth;
