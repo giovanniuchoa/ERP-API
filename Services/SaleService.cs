@@ -13,6 +13,19 @@ namespace CarQuery__Test.Services
         {
         }
 
+        public async Task<List<Sale>> GetSalesByAsync (DateTime? dthRegistroINI, DateTime? dthRegistroFIM, string? marcaCarro, int? idVendedor, decimal? precoINI, decimal? precoFIM)
+        {
+            try
+            {
+                var ret = await _context.GetSalesByAsync(dthRegistroINI, dthRegistroFIM, marcaCarro, idVendedor, precoINI, precoFIM);
+                return ret;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         public static Sale ValidateSale(Sale sale)
         {
 

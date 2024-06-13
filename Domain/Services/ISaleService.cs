@@ -9,6 +9,7 @@ namespace CarQuery__Test.Domain.Services
         Task<Sale> CreateSaleAsync(Sale sale);
         Task<Sale> UpdateSaleAsync(int id, Sale sale);
         Task<bool> DeleteSaleAsync(int id);
+        Task<List<Sale>> GetSalesByAsync(DateTime? dthRegistroINI, DateTime? dthRegistroFIM, string? marcaCarro, int? idVendedor, decimal? precoINI, decimal? precoFIM);
 
     } 
 }
