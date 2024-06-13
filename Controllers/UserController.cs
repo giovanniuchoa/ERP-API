@@ -8,12 +8,10 @@ using System.Security.Claims;
 
 namespace CarQuery__Test.Controllers
 {
-
     [Route("User")]
     [Authorize]
-    public class UserController : ControllerBase 
+    public class UserController : ControllerBase
     {
-
         private readonly IUserService _userService;
 
         public UserController(IUserService userService)
@@ -21,32 +19,52 @@ namespace CarQuery__Test.Controllers
             _userService = userService;
         }
 
-        [HttpPost("authenticate"), AllowAnonymous] //Authenticate user
+        /// <summary>
+        /// Autentica um usuário.
+        /// </summary>
+        /// <param name="userAuthenticated">Credenciais do usuário.</param>
+        /// <returns>Token JWT se a autenticação for bem-sucedida.</returns>
+        /// <response code="200">Usuário autenticado com sucesso.</response>
+        /// <response code="400">Usuário ou senha incorretos.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPost("authenticate"), AllowAnonymous]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Authenticate(UserAuthenticateRequest userAuthenticated)
         {
-
             try
             {
                 var login = await _userService.AuthenticateAsync(userAuthenticated);
 
                 if (login == null)
                 {
-                    return BadRequest($"Incorrect User or Password");
+                    return BadRequest("Incorrect User or Password");
                 }
                 else
                 {
                     return Ok(login);
                 }
-                
             }
             catch (Exception ex)
             {
                 return StatusCode(500, "Internal server error: " + ex.Message);
             }
-            
         }
 
-        [HttpGet] //Get all users
+        /// <summary>
+        /// Obtém todos os usuários.
+        /// </summary>
+        /// <returns>Uma lista de usuários.</returns>
+        /// <response code="200">Retorna a lista de usuários.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="404">Nenhum usuário encontrado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<User>), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetAllUsers()
         {
             try
@@ -64,7 +82,20 @@ namespace CarQuery__Test.Controllers
             }
         }
 
-        [HttpGet("{id}")] //Get user by id
+        /// <summary>
+        /// Obtém um usuário pelo ID.
+        /// </summary>
+        /// <param name="id">ID do usuário.</param>
+        /// <returns>O usuário correspondente ao ID.</returns>
+        /// <response code="200">Retorna o usuário solicitado.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="404">Usuário não encontrado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(User), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetUser(int id)
         {
             try
@@ -82,14 +113,27 @@ namespace CarQuery__Test.Controllers
             }
         }
 
-        [HttpPost] //Create a new user
+        /// <summary>
+        /// Cria um novo usuário.
+        /// </summary>
+        /// <param name="user">O objeto usuário a ser criado.</param>
+        /// <returns>Mensagem de sucesso ou erro.</returns>
+        /// <response code="200">Usuário criado com sucesso.</response>
+        /// <response code="400">Formato JSON inválido.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPost]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
             string role = TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Role);
 
             if (role.Equals("S") || role.Equals("U"))
             {
-                return BadRequest($"User without access");
+                return BadRequest("User without access");
             }
 
             try
@@ -101,9 +145,8 @@ namespace CarQuery__Test.Controllers
                 }
                 else
                 {
-                    return Ok($"User created successfully.");
+                    return Ok("User created successfully.");
                 }
-
             }
             catch (Exception ex)
             {
@@ -111,14 +154,30 @@ namespace CarQuery__Test.Controllers
             }
         }
 
-        [HttpPut("{id}")] //Update a user
+        /// <summary>
+        /// Atualiza um usuário existente.
+        /// </summary>
+        /// <param name="id">ID do usuário a ser atualizado.</param>
+        /// <param name="user">O objeto usuário com as novas informações.</param>
+        /// <returns>Mensagem de sucesso ou erro.</returns>
+        /// <response code="200">Usuário atualizado com sucesso.</response>
+        /// <response code="400">Formato JSON inválido.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="404">Usuário não encontrado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User user)
         {
             string role = TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Role);
 
             if (role.Equals("S") || role.Equals("U"))
             {
-                return BadRequest($"User without access");
+                return BadRequest("User without access");
             }
 
             try
@@ -126,9 +185,9 @@ namespace CarQuery__Test.Controllers
                 var updatedUser = await _userService.UpdateUserAsync(id, user);
                 if (updatedUser == null)
                 {
-                    return NotFound($"Failed to update user.");
+                    return NotFound("Failed to update user.");
                 }
-                return Ok($"User updated successfully.");
+                return Ok("User updated successfully.");
             }
             catch (Exception ex)
             {
@@ -136,14 +195,29 @@ namespace CarQuery__Test.Controllers
             }
         }
 
-        [HttpDelete("{id}")] //Delete a user
+        /// <summary>
+        /// Exclui um usuário pelo ID.
+        /// </summary>
+        /// <param name="id">ID do usuário a ser excluído.</param>
+        /// <returns>Mensagem de sucesso ou erro.</returns>
+        /// <response code="200">Usuário excluído com sucesso.</response>
+        /// <response code="400">Formato JSON inválido.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="404">Usuário não encontrado.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [HttpDelete("{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> DeleteUser(int id)
         {
             string role = TokenService.GetValueFromClaim(HttpContext.User.Identity, ClaimTypes.Role);
 
             if (role.Equals("S") || role.Equals("U"))
             {
-                return BadRequest($"User without access");
+                return BadRequest("User without access");
             }
 
             try
@@ -151,7 +225,7 @@ namespace CarQuery__Test.Controllers
                 var result = await _userService.DeleteUserAsync(id);
                 if (result == false)
                 {
-                    return NotFound($"User not found.");
+                    return NotFound("User not found.");
                 }
                 return Ok($"User ID ({id}) deleted successfully.");
             }
@@ -161,6 +235,4 @@ namespace CarQuery__Test.Controllers
             }
         }
     }
-
-    
 }
