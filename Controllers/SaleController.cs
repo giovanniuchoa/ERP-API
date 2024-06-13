@@ -21,6 +21,24 @@ namespace CarQuery__Test.Controllers
             _saleService = SaleService;
         }
 
+        [HttpGet("filter")]
+        public async Task<IActionResult> GetSalesBy(DateTime? dthRegistroINI, DateTime? dthRegistroFIM, string? marcaCarro, int? idVendedor, decimal? precoINI, decimal? precoFIM)
+        {
+            try
+            {
+                var sales = await _saleService.GetSalesByAsync(dthRegistroINI, dthRegistroFIM, marcaCarro, idVendedor, precoINI, precoFIM);
+                if (sales == null || !sales.Any())
+                {
+                    return NotFound("No sales found.");
+                }
+                return Ok(sales);
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
         [HttpGet] //Get all Sales
         public async Task<IActionResult> GetAllSales()
         { 
