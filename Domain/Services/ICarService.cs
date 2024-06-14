@@ -8,8 +8,8 @@ namespace CarQuery__Test.Domain.Services
 
         Task<IEnumerable<Car>> GetAllCarsAsync();
         Task<Car> GetCarByIdAsync(int id);
-        Task<Car> CreateCarAsync(Car car);
-        Task<Car> UpdateCarAsync(int id, Car car);
+        Task<Return> CreateCarAsync(Car car);
+        Task<Return> UpdateCarAsync(int id, Car car);
         Task<bool> DeleteCarAsync(int id);
 
 

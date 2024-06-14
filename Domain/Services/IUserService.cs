@@ -6,8 +6,8 @@ namespace CarQuery__Test.Domain.Services
     { 
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task<User> GetUserByIdAsync(int id); 
-        Task<User> CreateUserAsync(User user); 
-        Task<User> UpdateUserAsync(int id, User user);
+        Task<Return> CreateUserAsync(User user); 
+        Task<Return> UpdateUserAsync(int id, User user);
         Task<bool> DeleteUserAsync(int id);
         Task<UserAuthenticateResponse> AuthenticateAsync(UserAuthenticateRequest user);
 

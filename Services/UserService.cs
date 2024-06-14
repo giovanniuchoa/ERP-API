@@ -2,6 +2,7 @@
 using CarQuery__Test.Cryptography;
 using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
+using CarQuery__Test.Domain.Models.Enums;
 using CarQuery__Test.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,39 +42,185 @@ namespace CarQuery__Test.Services
 
         }
 
-        public static User ValidateUser(User user)
+        public static Return ValidateUser(User user)
         {
 
-            if (user != null && !string.IsNullOrEmpty(user.nameUser) && user.sex != null && !string.IsNullOrEmpty(user.cpf) && user.birth != null
-                && !string.IsNullOrEmpty(user.password) && !string.IsNullOrEmpty(user.email) && !string.IsNullOrEmpty(user.phone)
-                && user.userType != 0)
+            Return ret = new Return();
+            Return fCpf = ValidateCpf(user.cpf);
+            Return fPass = ValidatePassword(user.password);
+            Return fPhone = ValidatePhone(user.phone);
+
+            EUserType userType = user.userType;
+            ESex userSex = user.sex;
+
+            if (user == null)
             {
-                return user;
+                ret.Error = true;
+                ret.Message = "Null User";
+                return ret;
             }
-            else
+            if (fCpf.Error == true)
             {
-                return null;
+                return fCpf;
             }
+            if (fPass.Error == true)
+            {
+                return fPass;
+            }
+            if (fPhone.Error == true)
+            {
+                return fPhone;
+            }
+            if (!Enum.IsDefined(typeof(EUserType), userType))
+            {
+                ret.Error = true;
+                ret.Message = "Invalid user type.";
+                return ret;
+            }
+            if (!Enum.IsDefined(typeof(ESex), userSex))
+            {
+                ret.Error = true;
+                ret.Message = "Invalid user sex.";
+                return ret;
+            }
+
+            ret.Success = true;
+            ret.Message = "User validated";
+            ret.Extra = fPhone.Extra;
+            return ret;
+
         }
 
-        public async Task<User> CreateUserAsync(User user)
+        public static Return ValidateCpf(string cpf)
+        {
+
+            Return ret = new Return();
+
+            cpf = new string(cpf.Where(char.IsDigit).ToArray());
+
+            if (cpf.Length != 11) 
+            { 
+                ret.Error = true;
+                ret.Message = "Please type 11 characters in CPF";
+                return ret;
+            }
+
+            if (cpf.All(c => c == cpf[0]))
+            {
+                ret.Error = true;
+                ret.Message = "CPF characters can't be equal";
+                return ret;
+            }
+            ret.Success = true;
+            ret.Message = "CPF validated";
+            return ret;      
+        }
+
+        public static Return ValidatePassword(string password)
+        {
+
+            Return ret = new Return();
+
+            if (password.Length < 7)
+            {
+                ret.Error = true;
+                ret.Message = "Password requires at least 8 characters.";
+                return ret;
+            }
+
+            if (!password.Any(char.IsUpper))
+            {
+                ret.Error = true;
+                ret.Message = "Password requires at least 1 uppercase.";
+                return ret;
+            }
+
+            if (!password.Any(char.IsLower))
+            {
+                ret.Error = true;
+                ret.Message = "Password requires at least 1 lowercase.";
+                return ret;
+            }
+
+            if (!password.Any(char.IsDigit))
+            {
+                ret.Error = true;
+                ret.Message = "Password requires at least 1 number.";
+                return ret;
+            }
+
+            if (!password.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                ret.Error = true;
+                ret.Message = "Password requires at least 1 special character.";
+                return ret;
+            }
+
+            ret.Success = true;
+            ret.Message = "Password validated";
+            return ret;
+        }
+
+        public static Return ValidatePhone(string phone)
+        {
+            var ret = new Return();
+
+            phone = new string(phone.Where(char.IsDigit).ToArray());
+
+            if (phone.Length < 10 || phone.Length > 11)
+            {
+                ret.Error = true;
+                ret.Message = "Phone number must have 10 or 11 digits.";
+                return ret;
+            }
+
+            if (phone[0] == '0')
+            {
+                ret.Error = true;
+                ret.Message = "Phone number can't start with '0'.";
+                return ret;
+            }
+
+            string pattern = @"^(\d{2})(\d{8,9})$";
+            if (!System.Text.RegularExpressions.Regex.IsMatch(phone, pattern))
+            {
+                ret.Error = true;
+                ret.Message = "Invalid phone number format.";
+                return ret;
+            }
+
+            ret.Success = true;
+            ret.Message = "Phone validated";
+            ret.Extra = phone;
+            return ret;
+        }
+
+        public async Task<Return> CreateUserAsync(User user)
         {
             try
             {
 
-                var ret = ValidateUser(user);
+                Return ret = ValidateUser(user);
 
-                if (ret != null)
+                if (ret.Success == true)
                 {
+                    if (ret.Extra != null)
+                    {
+                        user.phone = ret.Extra;
+                    }
+                    
                     user.password = user.password.GenerateHash();
 
                     _context.Users.Add(user);
                     await _context.SaveChangesAsync();
-                    return user;
+
+                    ret.Success = true;
+                    ret.Message = "User created";
+                    return ret;
                 }
                 else
                 {
-                    return null;
+                    return ret;
                 }
 
             }
@@ -115,18 +262,20 @@ namespace CarQuery__Test.Services
             return await _context.Users.FindAsync(id);
         }
 
-        public async Task<User> UpdateUserAsync(int id, User user)
+        public async Task<Return> UpdateUserAsync(int id, User user)
         {
-            var ret = ValidateUser(user);
+            Return ret = ValidateUser(user);
             var existingUser = await _context.Users.FindAsync(id);
 
-            if (ret == null)
+            if (ret.Error == true)
             {
-                return null;
+                return ret;
             }
             else if (existingUser == null)
             {
-                return null;
+                ret.Error = true;
+                ret.Message = "User not found.";
+                return ret;
             }
             else
             {
@@ -142,7 +291,9 @@ namespace CarQuery__Test.Services
                 _context.Users.Update(existingUser);
                 await _context.SaveChangesAsync();
 
-                return user;
+                ret.Success = true;
+                ret.Message = "User " + user.nameUser + " updated successfully.";
+                return ret;
             }
         }
     }

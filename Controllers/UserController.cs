@@ -138,10 +138,10 @@ namespace CarQuery__Test.Controllers
 
             try
             {
-                var createdUser = await _userService.CreateUserAsync(user);
-                if (createdUser == null)
+                Return createdUser = await _userService.CreateUserAsync(user);
+                if (createdUser.Error == true)
                 {
-                    return BadRequest("Invalid JSON format");
+                    return BadRequest(createdUser.Message);
                 }
                 else
                 {
@@ -182,12 +182,12 @@ namespace CarQuery__Test.Controllers
 
             try
             {
-                var updatedUser = await _userService.UpdateUserAsync(id, user);
-                if (updatedUser == null)
+                Return updatedUser = await _userService.UpdateUserAsync(id, user);
+                if (updatedUser.Error == true)
                 {
-                    return NotFound("Failed to update user.");
+                    return NotFound(updatedUser.Message);
                 }
-                return Ok("User updated successfully.");
+                return Ok(updatedUser.Message);
             }
             catch (Exception ex)
             {

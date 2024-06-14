@@ -1,5 +1,6 @@
 ﻿using CarQuery__Test.Data;
 using CarQuery__Test.Domain.Models;
+using CarQuery__Test.Domain.Models.Enums;
 using CarQuery__Test.Domain.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,37 +13,76 @@ namespace CarQuery__Test.Services
         {
         }
 
-        public static Car ValidateCar(Car car)
+        public static Return ValidateCar(Car car)
         {
 
-            if (car != null && !string.IsNullOrEmpty(car.model) && !string.IsNullOrEmpty(car.brand) && car.year != 0
-                && car.color != 0 && car.price != 0)
+            Return ret = new Return();
+            EColor carColor = car.color;
+
+            if (car == null)
             {
-                return car;
+                ret.Error = true;
+                ret.Message = "Car null.";
+                return ret;
             }
-            else
+
+            if (string.IsNullOrEmpty(car.model))
             {
-                return null;
+                ret.Error = true;
+                ret.Message = "Car model is empty.";
+                return ret;
             }
+
+            if (string.IsNullOrEmpty(car.brand))
+            {
+                ret.Error = true;
+                ret.Message = "Car brand is empty.";
+                return ret;
+            }
+
+            if (car.year == 0)
+            {
+                ret.Error = true;
+                ret.Message = "Invalid car year.";
+                return ret;
+            }
+
+            if (car.price == 0)
+            {
+                ret.Error = true;
+                ret.Message = "Invalid car price.";
+                return ret;
+            }
+
+            if (!Enum.IsDefined(typeof(EColor), carColor))
+            {
+                ret.Error = true;
+                ret.Message = "Invalid car color.";
+                return ret;
+            }
+
+            ret.Success = true;
+            ret.Message = "Car validated.";
+            return ret;
         }
 
 
-        public async Task<Car> CreateCarAsync(Car car)
+        public async Task<Return> CreateCarAsync(Car car)
         {
 
             try
             {
 
-                var ret = ValidateCar(car);
+                Return ret = ValidateCar(car);
 
-                if (ret != null)
+                if (ret.Success == true)
                 {
                 _context.Cars.Add(car);
                 await _context.SaveChangesAsync();
-                return car;
+                return ret;
                 } else
                 {
-                    return null;
+                    return ret;
                 }
 
             }
@@ -89,19 +129,20 @@ namespace CarQuery__Test.Services
         }
 
 
-        public async Task<Car> UpdateCarAsync(int id, Car car)
+        public async Task<Return> UpdateCarAsync(int id, Car car)
         {
 
-            var ret = ValidateCar(car);
+            Return ret = ValidateCar(car);
             var existingCar = await _context.Cars.FindAsync(id);
 
-            if (ret == null)
+            if (ret.Error == true)
             {
-                return null;
+                return ret;
             } 
             else if (existingCar == null)
             {
-                return null;
+                ret.Message = "No car found.";
+                return ret;
             }
             else
             {
@@ -114,7 +155,8 @@ namespace CarQuery__Test.Services
                 _context.Cars.Update(existingCar);
                 await _context.SaveChangesAsync();
 
-                return car;
+                ret.Message = "Car ID " + id + " updated successfully.";
+                return ret;
             }
 
         }
