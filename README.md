@@ -2,7 +2,7 @@
 
 ## English Version
 
-This project is a simple API for car sales that uses ASP.NET Core, C#, Entity Framework, and SQL Server.
+This project is a simple API for a car sales administrative dashboard that uses ASP.NET Core, C#, Entity Framework, and SQL Server.
 
 
 
@@ -83,7 +83,7 @@ This project aims to implement the following features in the future:
 
 ## Versão em Português
 
-Este projeto é uma API simples sobre venda de carros que utiliza ASP.NET Core, C# e Entity Framework e SQL Server.
+Este projeto é uma API simples para um dashboard de vendas de carros que utiliza ASP.NET Core, C# e Entity Framework e SQL Server.
 
 [English Version](#english-version)
 
