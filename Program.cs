@@ -45,30 +45,19 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "API - Car",
+        Title = "ERP - API",
         Version = "v1",
-        Description = "API para gerenciamento de carros, vendas e usuários.",
-        Contact = new OpenApiContact
-        {
-            Name = "Nome do Contato",
-            Email = "email@exemplo.com",
-            Url = new Uri("https://www.exemplo.com")
-        },
-        License = new OpenApiLicense
-        {
-            Name = "MIT",
-            Url = new Uri("https://opensource.org/licenses/MIT")
-        }
+        Description = "API para gerenciamento de vendas de carros. Possui mecanismo de autenticação e acesso restrito a tipos diferentes de usuários.",
     });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
         Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Digite 'Bearer' antes de inserir o Token."
+        Description = "Digite 'Bearer' seguido do token JWT."
     });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -80,13 +69,15 @@ builder.Services.AddSwaggerGen(c =>
                 {
                     Type = ReferenceType.SecurityScheme,
                     Id = "Bearer"
-                }
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
             },
-            new string[] {}
+            new List<string>()
         }
     });
 
-    // Include XML comments (path is based on the output path of the .csproj file)
     var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
@@ -101,14 +92,13 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyAllowSpecificOrigins,
-                          policy =>
-                          {
-                              policy.AllowAnyOrigin()
-                                    .AllowAnyHeader()
-                                    .AllowAnyMethod();
-                          });
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
 });
-
 
 var app = builder.Build();
 
@@ -117,8 +107,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API - Car");
-        c.DocumentTitle = "API - Car";
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ERP - API v1");
+        c.DocumentTitle = "ERP - API";
         c.RoutePrefix = string.Empty;
     });
 }
