@@ -20,6 +20,33 @@ namespace CarQuery__Test.Controllers
         }
 
         /// <summary>
+        /// Filtra as 10 maiores vendas.
+        /// </summary>
+        /// <returns>Uma lista das 10 maiores vendas.</returns>
+        /// <response code="200">Retorna a lista de maiores vendas.</response>
+        /// <response code="401">Usuário não autorizado.</response>
+        /// <response code="404">Nenhuma venda encontrada.</response>
+        /// <response code="500">Erro interno do servidor.</response>
+        [ProducesResponseType(typeof(IEnumerable<TopSales>), 200)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(500)]
+        [HttpGet("TopSales")]
+        public async Task<IActionResult> GetTopSales()
+        {
+            try
+            {
+                var sales = await _saleService.GetTopSalesAsync();
+                return Ok(sales);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error: " + ex.Message);
+            }
+        }
+
+
+        /// <summary>
         /// Filtra as vendas com base nos critérios fornecidos.
         /// </summary>
         /// <param name="dthRegistroINI">Data de início do registro.</param>
