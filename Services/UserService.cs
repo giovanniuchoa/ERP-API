@@ -98,10 +98,10 @@ namespace CarQuery__Test.Services
 
             cpf = new string(cpf.Where(char.IsDigit).ToArray());
 
-            if (cpf.Length != 11) 
+            if (cpf.Length != 14) 
             { 
                 ret.Error = true;
-                ret.Message = "Please type 11 characters in CPF";
+                ret.Message = "Please type 14 characters in CPF";
                 return ret;
             }
 
