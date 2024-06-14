@@ -98,8 +98,8 @@ namespace CarQuery__Test.Services
 
             cpf = new string(cpf.Where(char.IsDigit).ToArray());
 
-            if (cpf.Length != 14) 
-            { 
+            if (cpf.Length != 11)
+            {
                 ret.Error = true;
                 ret.Message = "Please type 14 characters in CPF";
                 return ret;
@@ -113,7 +113,7 @@ namespace CarQuery__Test.Services
             }
             ret.Success = true;
             ret.Message = "CPF validated";
-            return ret;      
+            return ret;
         }
 
         public static Return ValidatePassword(string password)
@@ -208,7 +208,7 @@ namespace CarQuery__Test.Services
                     {
                         user.phone = ret.Extra;
                     }
-                    
+
                     user.password = user.password.GenerateHash();
 
                     _context.Users.Add(user);
