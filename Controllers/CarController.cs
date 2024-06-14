@@ -108,10 +108,10 @@ namespace CarQuery__Test.Controllers
 
             try
             {
-                var createdCar = await _carService.CreateCarAsync(car);
-                if (createdCar == null)
+                Return createdCar = await _carService.CreateCarAsync(car);
+                if (createdCar.Error == true)
                 {
-                    return BadRequest("Invalid JSON format");
+                    return BadRequest(createdCar.Message);
                 }
                 else
                 {
@@ -152,12 +152,12 @@ namespace CarQuery__Test.Controllers
 
             try
             {
-                var updatedCar = await _carService.UpdateCarAsync(id, car);
-                if (updatedCar == null)
+                Return updatedCar = await _carService.UpdateCarAsync(id, car);
+                if (updatedCar.Error == true)
                 {
-                    return NotFound($"Failed to update car.");
+                    return NotFound(updatedCar.Message);
                 }
-                return Ok($"Car updated successfully.");
+                return Ok(updatedCar.Message);
             }
             catch (Exception ex)
             {
