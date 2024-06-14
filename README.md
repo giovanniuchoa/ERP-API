@@ -8,15 +8,6 @@ This project is a simple API for a car sales administrative dashboard that uses 
 
 [Versão em Português](#versão-em-português)
 
-## Getting Started
-
-Follow these steps to get started:
-
-1. Download the project files as a .zip file.
-2. Extract the contents of the .zip file.
-3. Change the database connection string in the `Program.cs` file to your own.
-4. Use the code as needed.
-
 ## Packages Used
 
 The project uses the following packages:
@@ -86,15 +77,6 @@ This project aims to implement the following features in the future:
 Este projeto é uma API simples para um dashboard de vendas de carros que utiliza ASP.NET Core, C# e Entity Framework e SQL Server.
 
 [English Version](#english-version)
-
-## Começando
-
-Siga estes passos para começar a usar o projeto:
-
-1. Faça o download dos arquivos do projeto como um arquivo .zip.
-2. Extraia o conteúdo do arquivo .zip.
-3. Altere a string de conexão do banco de dados no arquivo `Program.cs` para a sua.
-4. Utilize o código conforme necessário.
 
 ## Pacotes Utilizados
 
