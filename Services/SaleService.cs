@@ -96,6 +96,11 @@ namespace CarQuery__Test.Services
                 .ToListAsync();
         }
 
+        public async Task<List<TopSales>> GetTopSalesAsync()
+        {
+            return await _context.GetTopSalesAsync();
+        }
+
         public async Task<Sale> GetSaleByIdAsync(int id)
         {
             return await _context.Sales

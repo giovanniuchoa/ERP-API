@@ -12,6 +12,8 @@ namespace CarQuery__Test.Data
         public DbSet<User> Users { get; set; }
 
         public DbSet<Sale> Sales { get; set; }
+        public DbSet<TopSales> TopSales { get; set; }
+
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
@@ -37,8 +39,14 @@ namespace CarQuery__Test.Data
                 .WithMany()
                 .HasForeignKey(s => s.Fk_IdCar)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TopSales>().ToView("vw_BuscaTopSales").HasNoKey();
         }
 
+        public async Task<List<TopSales>> GetTopSalesAsync()
+        {
+            return await TopSales.FromSqlRaw("SELECT * FROM vw_BuscaTopSales").ToListAsync();
+        }
 
         public async Task<List<Sale>> GetSalesByAsync(
             DateTime? dthRegistroINI,
