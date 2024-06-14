@@ -534,3 +534,12 @@ C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCor
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Giovanni\Desktop\API-car\API-car\bin\Debug\net8.0\CarQuery--Test.xml
 C:\Users\Giovanni\Desktop\API-car\API-car\obj\Debug\net8.0\CarQuery--Test.xml
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\CarQuery--Test.xml
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\Microsoft.OpenApi.dll
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\Joao\Git\API-car\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Joao\Git\API-car\obj\Debug\net8.0\CarQuery--Test.xml
